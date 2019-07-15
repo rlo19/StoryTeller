@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-12">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/xampp/htdocs/rlo/java/TextToSpeech/libs/cmu_time_awb.jar"/>
+	<classpathentry kind="lib" path="C:/xampp/htdocs/rlo/java/TextToSpeech/libs/cmu_us_kal.jar"/>
+	<classpathentry kind="lib" path="C:/xampp/htdocs/rlo/java/TextToSpeech/libs/cmudict04.jar"/>
+	<classpathentry kind="lib" path="C:/xampp/htdocs/rlo/java/TextToSpeech/libs/cmulex.jar"/>
+	<classpathentry kind="lib" path="C:/xampp/htdocs/rlo/java/TextToSpeech/libs/cmutimelex.jar"/>
+	<classpathentry kind="lib" path="C:/xampp/htdocs/rlo/java/TextToSpeech/libs/en_us.jar"/>
+	<classpathentry kind="lib" path="C:/xampp/htdocs/rlo/java/TextToSpeech/libs/freetts.jar"/>
+	<classpathentry kind="lib" path="C:/xampp/htdocs/rlo/java/TextToSpeech/libs/freetts-jsapi10.jar"/>
+	<classpathentry kind="lib" path="C:/xampp/htdocs/rlo/java/TextToSpeech/libs/jsapi.jar"/>
+	<classpathentry kind="lib" path="C:/xampp/htdocs/rlo/java/TextToSpeech/libs/mbrola.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
