@@ -2,11 +2,14 @@
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.ExecutionException;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -29,6 +32,7 @@ public class Frame {
 	JScrollPane scrollPane;
 	
 	Teller teller;
+	Writer writer; 
 	
 	public Frame() {
 		
@@ -62,14 +66,14 @@ public class Frame {
 				String name = btnRead.getText();				
 				
 				if(name == "Read") {					
-					read();					
+					read();		
+					textArea.setEditable(false);
 				} else {					
 					stop();
+					textArea.setEditable(true);
 				}				
 			}
 		});
-		
-		teller = new Teller("Hello World");
 		
 		btnUpload = new JButton("Upload");
 		btnUpload.setBounds(230, 195, 89, 23);
@@ -92,7 +96,7 @@ public class Frame {
 		          
 		          if(selectedFile.canRead()) {
 		        	  
-		        	 Writer writer = new Writer(selectedFile);
+		        	 writer = new Writer(selectedFile);
 		        	 
 		        	 writer.execute();
 		          }		          		          
@@ -106,22 +110,25 @@ public class Frame {
 	
 	private void read() {
 		
+		teller = new Teller(textArea.getText());
 		teller.execute();
+		
 		btnRead.setText("Stop");
 	}
 	
 	private void stop() {
 		
-		teller.cancel(true);
+		teller.cancel(true);		
+		teller = new Teller("");
+		
 		btnRead.setText("Read");
-		teller = new Teller("Hello World");
 	}
 	
 	private class Writer extends SwingWorker<Void, String> {
 
 		File file;
 		FileInputStream inputStream = null;
-		Scanner sc = null;
+		Scanner sc = null;		
 		
 		@Override
 		protected Void doInBackground() throws Exception {
@@ -138,6 +145,8 @@ public class Frame {
 		
 		private void write() throws IOException {
 
+			String book = "";
+			
 			try {
 				
 				inputStream = new FileInputStream(this.file.getPath());
@@ -145,13 +154,19 @@ public class Frame {
 				sc = new Scanner(inputStream, "UTF-8");
 				
 				while(sc.hasNextLine()) {
-					
-					System.out.println("publish");
-					
-					publish(sc.nextLine());
 
-					Thread.sleep(2000);
+					String line = sc.nextLine();
+					
+					if(line.isEmpty()) {
+						line = "\n\n";						
+					}
+					
+					book += line;
+
+					Thread.sleep(50);
 				}
+				
+				publish(book);
 				
 				if (sc.ioException() != null) {
 			        throw sc.ioException();
@@ -180,20 +195,15 @@ public class Frame {
 		protected void process(List<String> chunks) { 
             
 			String val = chunks.get(chunks.size()-1); 
-			
-			if(val.isEmpty()) {
-				val = "\n\n";
-				
-			}
-			System.out.println(String.valueOf(val));
-            
+
             textArea.append(String.valueOf(val));
         } 
 		
 		@Override
 		protected void done() {
 			
-			System.out.println("Done writing");			
+			System.out.println("Done writing");	
+			
 		}
 	}
 }
